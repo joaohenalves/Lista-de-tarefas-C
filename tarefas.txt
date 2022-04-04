@@ -1,0 +1,3 @@
+Nome: tarefa1 - Prioridade: 2 - Entrega: 09/09
+Nome: tarefa3 - Prioridade: 1 - Entrega: 11/12
+Nome: tarefa2 - Prioridade: 3 - Entrega: 21/10

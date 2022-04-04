@@ -1,38 +1,65 @@
-/*
- Este é um esqueleto que deve ser utilzado como base para implementação da Lista de tarefas;
-	- As funções não têm os parâmetros definidos; se necessário, estes devem ser incluídos;
- 	- Devem ser respeitados os nomes atribuidos aos métodos e estruturas, porém, novas estruturas e funções podem ser criadas, caso julgue necessário;
-	- Faça os includes necessários;
-	- A organização das funções fica a critério do programador;
-	- Códigos não indentados sofrerão duras penalidades;
-	- Não serão toleradas variaveis globais;
-	- Caso seja detectado plágio, os grupos envolvidos receberão nota 0.
-*/
-
-#include <stdio.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
-#define EXIT 10  // valor fixo para a opção que finaliza a aplicação
+#define EXIT 10
 
-//Struct que representa a data.
 typedef struct {
 	int day;
 	int month;
 } Date;
 
-// Estrutura que contém os campos dos registros das tarefas
 struct REC {
        char nome[50];
        int prioridade;
        Date entrega; 
-	  struct REC *next; // implemente como lista, como árvore BST, AVL...
-	  struct REC *prev;
+	  struct REC *filhoEsq;
+	  struct REC *filhoDir;
 };
 
-// Tipo criado para instanciar variaveis do tipo acima
 typedef struct REC Task;
 
-// Apresenta o menu da aplicação e retorna a opção selecionada
+
+struct REC* criaNovaTask(char *novoNome, int novaPri, int novoDia, int novoMes) {
+    struct REC *novaTask;
+    novaTask = malloc(sizeof(struct REC));
+    strcpy(novaTask->nome, novoNome);
+    novaTask->prioridade = novaPri;
+    novaTask->entrega.day = novoDia;
+    novaTask->entrega.month = novoMes;
+    novaTask->filhoEsq = NULL;
+    novaTask->filhoDir = NULL;
+
+    return novaTask;
+}
+
+struct REC* insereTaskArvore(struct REC *raiz, char *novoNome, int novaPri, int novoDia, int novoMes) {
+
+     if(raiz==NULL) {
+          raiz = criaNovaTask(novoNome, novaPri, novoDia, novoMes);
+     }
+     else if(strcmp(novoNome, raiz->nome) > 0) {
+          raiz->filhoDir = insereTaskArvore(raiz->filhoDir, novoNome, novaPri, novoDia, novoMes);
+     }
+     else {
+          raiz->filhoEsq = insereTaskArvore(raiz->filhoEsq, novoNome, novaPri, novoDia, novoMes);
+     }
+     return raiz;
+}
+
+struct REC* pesquisaTask(struct REC *raiz, char *nomeProcurado) {
+     if(raiz==NULL || strcmp(raiz->nome, nomeProcurado)==0) {
+          return raiz;
+     }
+     else if(strcmp(raiz->nome, nomeProcurado) < 0) {
+          return pesquisaTask(raiz->filhoDir, nomeProcurado);
+     }
+     else {
+          return pesquisaTask(raiz->filhoEsq, nomeProcurado);
+     }
+}
+
 int menu() {
 
      int op = 0;
@@ -76,23 +103,42 @@ void upTask () {
 
 // Programa principal
 int main() {
-    int op = 0;
-    Task t;
 
-    printf("Programa de gerenciamento de tarefas - Desenvolvido por João Henrique Alves\n\n");
+     printf("Programa de gerenciamento de tarefas - Desenvolvido por João Henrique Alves\n\n");
 
-    while (op != EXIT) {
-          op = menu();
-          printf("%d\n", op);
-          switch(op) {
-              case 1 : insTask(); break;
-              case 2 : delTask(); break;
-              case 3 : upTask(); break;
-              case 4 : queryTask(); break;
-              case 5 : listTasks(); break;
-              case 10 : break;
-              default : printf("Erro! Selecione uma opção válida!\n\n");
+     int op = 0;
+     struct REC *raiz;
+     int first = 0;
+     Task temp;
+
+     FILE *arq = fopen("tarefas.txt", "r");
+
+     while(fscanf(arq, "Nome: %s - Prioridade: %d - Entrega: %d/%d\n", &temp.nome, &temp.prioridade, &temp.entrega.day, &temp.entrega.month) > 0) {
+          if(first != 0) {
+               insereTaskArvore(raiz, temp.nome, temp.prioridade, temp.entrega.day, temp.entrega.month);
+          } else {
+               raiz = criaNovaTask(temp.nome, temp.prioridade, temp.entrega.day, temp.entrega.month);
+               first++;
           }
-    }
-    return 0;
+     }
+     fclose(arq);
+     
+
+
+
+     // while (op != EXIT) {
+     //      op = menu();
+     //      printf("%d\n", op);
+     //      switch(op) {
+     //           case 1 : insTask(); break;
+     //           case 2 : delTask(); break;
+     //           case 3 : upTask(); break;
+     //           case 4 : queryTask(); break;
+     //           case 5 : listTasks(); break;
+     //           case 10 : break;
+     //           default : printf("Erro! Selecione uma opção válida!\n\n");
+     //      }
+     // }
+
+     return 0;
 }
