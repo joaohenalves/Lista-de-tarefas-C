@@ -33,65 +33,65 @@ struct REC {
 typedef struct REC Task;
 
 // Apresenta o menu da aplicação e retorna a opção selecionada
-int menu()
-{
-    int op=0;
-    while (op!=EXIT)
-    {
-        printf("%d Finaliza",EXIT);
-        printf("\n: ");
-        scanf("%d",&op);
-       
-    }
-    return op;
+int menu() {
+
+     int op = 0;
+
+     printf("Selecione a opção desejada:\n\n");
+     printf("( 1 ) - Inserir tarefa /// ( 2 ) - Deletar tarefa /// ( 3 ) - Atualizar tarefa /// ( 4 ) - Consultar tarefa /// ( 5 ) - Listar Tarefas /// ( 10 ) - Finalizar programa\n");
+     scanf("%d",&op);
+
+     return op;
 }
 
 // Permite o cadastro de uma tarefa
-void insTask()
-{
+void insTask() {
+     printf("insere\n");
      return;
 }
 
 // Permite excluir uma tarefa
-void delTask ()
-{
+void delTask () {
+     printf("deleta\n");
      return;
 }
 
 // Lista o conteudo da lista de tarefas (todos os campos)
-void listTasks ()
-{
+void listTasks () {
+     printf("lista\n");
      return;
 }
 
 // Permite consultar uma tarefa da lista pelo nome
-void querytask ()
-{
+void queryTask () {
+     printf("procura\n");
      return;
 }
 
 // Permite a atualização dos dados de uma tarefa
-void upTask ()
-{
+void upTask () {
+     printf("atualiza\n");
      return;
 }
 
 // Programa principal
-int main()
-{
-    int op=0;
+int main() {
+    int op = 0;
     Task t;
 
-    while (op!=EXIT)
-    {
-          op=menu();
-          switch(op)
-          {
-              case 1 : insTask();
-              case 2 : delTask();
-              case 3 : upTask();
-              case 4 : queryTask();
-              case 5 : listTasks();
+    printf("Programa de gerenciamento de tarefas - Desenvolvido por João Henrique Alves\n\n");
+
+    while (op != EXIT) {
+          op = menu();
+          printf("%d\n", op);
+          switch(op) {
+              case 1 : insTask(); break;
+              case 2 : delTask(); break;
+              case 3 : upTask(); break;
+              case 4 : queryTask(); break;
+              case 5 : listTasks(); break;
+              case 10 : break;
+              default : printf("Erro! Selecione uma opção válida!\n\n");
           }
     }
     return 0;
