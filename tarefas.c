@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-#define EXIT 10
+#define EXIT 10     
 
 typedef struct {
 	int day;
@@ -11,15 +11,14 @@ typedef struct {
 } Date;
 
 struct REC {
-       char nome[50];
-       int prioridade;
-       Date entrega; 
-	  struct REC *filhoEsq;
-	  struct REC *filhoDir;
+     char nome[50];
+     int prioridade;
+     Date entrega; 
+	struct REC *filhoEsq;
+	struct REC *filhoDir;
 };
 
 typedef struct REC Task;
-
 
 struct REC* newNode(char *novoNome, int novaPri, int novoDia, int novoMes) {
     struct REC *novaTask;
@@ -49,7 +48,7 @@ struct REC* insTask(struct REC *raiz, char *novoNome, int novaPri, int novoDia, 
 }
 
 struct REC* queryTask(struct REC *raiz, char *nomeProcurado) {
-     if(raiz==NULL || strcmp(raiz->nome, nomeProcurado)==0) {
+     if(raiz==NULL || strcmp(raiz->nome, nomeProcurado) == 0) {
           return raiz;
      }
      else if(strcmp(raiz->nome, nomeProcurado) < 0) {
@@ -60,10 +59,45 @@ struct REC* queryTask(struct REC *raiz, char *nomeProcurado) {
      }
 }
 
+struct REC* delTask(struct REC *raiz, char* nome) {
 
-void delTask () {
-     printf("deleta\n");
-     return;
+     if(raiz==NULL) {
+          return NULL;
+     }
+
+     if (strcmp(nome, raiz->nome) > 0) {
+          raiz->filhoDir = delTask(raiz->filhoDir, nome);
+     } else if(strcmp(nome, raiz->nome) < 0) {
+          raiz->filhoEsq = delTask(raiz->filhoEsq, nome);
+     } else {
+          if(raiz->filhoEsq==NULL && raiz->filhoDir==NULL) {
+               free(raiz);
+               return NULL;
+          } else if(raiz->filhoEsq==NULL || raiz->filhoDir==NULL) {
+               struct REC *temp;
+               if(raiz->filhoEsq==NULL) {
+                    temp = raiz->filhoDir;
+               } else {
+                    temp = raiz->filhoEsq;
+               }
+               free(raiz);
+               return temp;
+          } else {
+               struct REC *temp = encontraMinimo(raiz->filhoDir);
+               strcpy(raiz->nome, temp->nome);
+               raiz->filhoDir = delete(raiz->filhoDir, temp->nome);
+          }
+     }
+     return raiz;
+}
+
+struct REC* encontraMinimo(struct REC *raiz) {
+     if(raiz == NULL) {
+          return NULL;
+     } else if(raiz->filhoEsq != NULL) {
+          return find_minimum(raiz->filhoEsq);
+     }
+     return raiz;
 }
 
 void listTasks(struct REC *raiz) {
