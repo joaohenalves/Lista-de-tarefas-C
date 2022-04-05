@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #define EXIT 10     
 
 typedef struct {
@@ -95,6 +94,9 @@ struct REC* delTask(struct REC* raiz, char* nome) {
           } else {
                delTemp = encontraMinimo(raiz->filhoDir);
                strcpy(raiz->nome, delTemp->nome);
+               raiz->prioridade = delTemp->prioridade;
+               raiz->entrega.day = delTemp->entrega.day;
+               raiz->entrega.month = delTemp->entrega.month;
                raiz->filhoDir = delTask(raiz->filhoDir, delTemp->nome);
           }
      }
@@ -149,7 +151,7 @@ int menu(struct REC* raiz) {
 
      } else if(op == 2) {
 
-          printf("\nDigite o nome da tarefa a ser removida:\n\n");
+          printf("\nDigite o nome da tarefa a ser removida:\n");
           scanf("%s", &temp.nome);
           tempRaiz = queryTask(raiz, temp.nome);
           if(tempRaiz != NULL) {
@@ -161,7 +163,7 @@ int menu(struct REC* raiz) {
 
      } else if(op == 3) {
 
-          printf("\nDigite o nome da tarefa a ter sua prioridade e data de entrega atualizadas:\n\n");
+          printf("\nDigite o nome da tarefa a ter sua prioridade e data de entrega atualizadas:\n");
           scanf("%s", &temp.nome);
           tempRaiz = queryTask(raiz, temp.nome);
           if(tempRaiz != NULL) {
@@ -173,7 +175,7 @@ int menu(struct REC* raiz) {
                scanf("%d", &temp.entrega.month);
                upTask(tempRaiz, temp.prioridade, temp.entrega.day, temp.entrega.month);
           } else {
-               printf("\nErro! Tarefa nao encontrada!\n\n");
+               printf("\nErro! Tarefa nao encontrada!\n");
           }
 
      } else if(op == 4) {
@@ -199,7 +201,7 @@ int menu(struct REC* raiz) {
           fclose(arqAtt);
           
      } else {
-          printf("Erro! Por favor, selecione uma opcao valida!\n\n");
+          printf("\nErro! Por favor, selecione uma opcao valida!\n");
      }
 
      return op;

@@ -1,3 +1,8 @@
-Nome: tarefa1 - Prioridade: 2 - Entrega: 09/09
-Nome: tarefa3 - Prioridade: 1 - Entrega: 11/12
-Nome: tarefa2 - Prioridade: 3 - Entrega: 21/10
+Nome: podTrabalhoFinal - Prioridade: 3 - Entrega: 5/4
+Nome: gaProva - Prioridade: 1 - Entrega: 20/3
+Nome: gaExc - Prioridade: 1 - Entrega: 11/3
+Nome: gaLista - Prioridade: 3 - Entrega: 21/2
+Nome: prog2Tf - Prioridade: 2 - Entrega: 1/4
+Nome: prog2Exc - Prioridade: 1 - Entrega: 15/3
+Nome: sdProjeto - Prioridade: 3 - Entrega: 2/4
+Nome: sdVerilog - Prioridade: 2 - Entrega: 30/3
