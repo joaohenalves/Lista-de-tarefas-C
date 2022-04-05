@@ -117,6 +117,13 @@ void upTask (struct REC* raiz, int prior, int dia, int mes) {
      return;
 }
 
+void gravaNoArquivoPreOrder(struct REC* raiz, FILE *file){
+	if(raiz == NULL) return;
+	fprintf(file, "Nome: %s - Prioridade: %d - Entrega: %d/%d\n", raiz->nome, raiz->prioridade, raiz->entrega.day, raiz->entrega.month);
+	gravaNoArquivoPreOrder(raiz->filhoEsq, file);
+	gravaNoArquivoPreOrder(raiz->filhoDir, file);
+}
+
 int menu(struct REC* raiz) {
 
      int op = 0;
@@ -173,14 +180,18 @@ int menu(struct REC* raiz) {
 
      } else if(op == 5) {
 
-          printf("\n");
+          printf("\n\n");
           listTasks(raiz);
           printf("\n");
 
      } else if(op == 10) {
+
+          FILE *arqAtt = fopen("tarefas.txt", "w");
+          gravaNoArquivoPreOrder(raiz, arqAtt);
+          fclose(arqAtt);
           
      } else {
-          printf("Erro! Por favor, selecione uma opção válida!");
+          printf("Erro! Por favor, selecione uma opcao valida!\n\n");
      }
 
      return op;
