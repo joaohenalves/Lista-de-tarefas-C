@@ -109,8 +109,10 @@ void listTasks(struct REC *raiz) {
 }
 
 
-void upTask () {
-     printf("atualiza\n");
+void upTask (struct REC* raiz, int prior, int dia, int mes) {
+     raiz->prioridade = prior;
+     raiz->entrega.day = dia;
+     raiz->entrega.month = mes;
      return;
 }
 
