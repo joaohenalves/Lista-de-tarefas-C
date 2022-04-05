@@ -130,59 +130,67 @@ int menu(struct REC* raiz) {
      Task temp;
      struct REC* tempRaiz;
 
-     printf("Selecione a opcao desejada:\n\n");
+     printf("\nSelecione a opcao desejada:\n\n");
      printf("( 1 ) - Inserir tarefa /// ( 2 ) - Deletar tarefa /// ( 3 ) - Atualizar tarefa /// ( 4 ) - Consultar tarefa /// ( 5 ) - Listar Tarefas /// ( 10 ) - Finalizar programa\n");
      scanf("%d", &op);
 
      if(op == 1) {
 
-          printf("Digite o nome da tarefa a ser inserida:\n\n");
+          printf("\nDigite o nome da tarefa a ser inserida:\n");
           scanf("%s", &temp.nome);
-          printf("Digite a prioridade da tarefa a ser inserida:\n\n");
+          printf("\nDigite a prioridade da tarefa a ser inserida:\n");
           scanf("%d", &temp.prioridade);
-          printf("Digite o dia de entrega da tarefa a ser inserida:\n\n");
+          printf("\nDigite o dia de entrega da tarefa a ser inserida:\n");
           scanf("%d", &temp.entrega.day);
-          printf("Digite o mes de entrega da tarefa a ser inserida:\n\n");
-          scanf("%d", &temp.entrega.day);
+          printf("\nDigite o mes de entrega da tarefa a ser inserida:\n");
+          scanf("%d", &temp.entrega.month);
           insTask(raiz, temp.nome, temp.prioridade, temp.entrega.day, temp.entrega.month);
+          printf("\nTarefa inserida com sucesso!\n");
 
      } else if(op == 2) {
 
-          printf("Digite o nome da tarefa a ser removida:\n\n");
+          printf("\nDigite o nome da tarefa a ser removida:\n\n");
           scanf("%s", &temp.nome);
-          delTask(raiz, temp.nome);
+          tempRaiz = queryTask(raiz, temp.nome);
+          if(tempRaiz != NULL) {
+               delTask(raiz, temp.nome);
+               printf("\nTarefa removida com sucesso!\n");
+          } else {
+               printf("\nErro! Tarefa nao encontrada!\n");
+          }
 
      } else if(op == 3) {
 
-          printf("Digite o nome da tarefa a ter sua prioridade e data de entrega atualizadas:\n\n");
+          printf("\nDigite o nome da tarefa a ter sua prioridade e data de entrega atualizadas:\n\n");
           scanf("%s", &temp.nome);
           tempRaiz = queryTask(raiz, temp.nome);
           if(tempRaiz != NULL) {
-               printf("Digite a nova prioridade da tarefa:\n\n");
+               printf("\nDigite a nova prioridade da tarefa:\n");
                scanf("%d", &temp.prioridade);
-               printf("Digite o novo dia de entrega da tarefa:\n\n");
+               printf("Digite o novo dia de entrega da tarefa:\n");
                scanf("%d", &temp.entrega.day);
-               printf("Digite o novo mes de entrega da tarefa:\n\n");
+               printf("Digite o novo mes de entrega da tarefa:\n");
                scanf("%d", &temp.entrega.month);
                upTask(tempRaiz, temp.prioridade, temp.entrega.day, temp.entrega.month);
-          }
-
-     } else if(op == 4) {
-
-          printf("\nDigite o nome da tarefa a ser procurada:\n\n");
-          scanf("%s", &temp.nome);
-          tempRaiz = queryTask(raiz, temp.nome);
-          if(tempRaiz != NULL) {
-               printf("\nNome: %s - Prioridade: %d - Entrega: %d/%d\n\n", tempRaiz->nome, tempRaiz->prioridade, tempRaiz->entrega.day, tempRaiz->entrega.month);
           } else {
                printf("\nErro! Tarefa nao encontrada!\n\n");
           }
 
+     } else if(op == 4) {
+
+          printf("\nDigite o nome da tarefa a ser procurada:\n");
+          scanf("%s", &temp.nome);
+          tempRaiz = queryTask(raiz, temp.nome);
+          if(tempRaiz != NULL) {
+               printf("\nNome: %s - Prioridade: %d - Entrega: %d/%d\n", tempRaiz->nome, tempRaiz->prioridade, tempRaiz->entrega.day, tempRaiz->entrega.month);
+          } else {
+               printf("\nErro! Tarefa nao encontrada!\n");
+          }
+
      } else if(op == 5) {
 
-          printf("\n\n");
-          listTasks(raiz);
           printf("\n");
+          listTasks(raiz);
 
      } else if(op == 10) {
 
@@ -199,9 +207,9 @@ int menu(struct REC* raiz) {
 
 int main() {
 
-     printf("----------------------------------------------------------------------------------\n");
+     printf("\n----------------------------------------------------------------------------------\n");
      printf("Programa de gerenciamento de tarefas - Desenvolvido por Joao Henrique Alves\n");
-     printf("----------------------------------------------------------------------------------\n\n");
+     printf("----------------------------------------------------------------------------------\n");
 
      int op = 0;
      int counter = 0;
@@ -221,9 +229,9 @@ int main() {
      fclose(arq);
 
      if(counter > 0) {
-          printf("%d tarefa(s) existente(s) no arquivo 'tarefas.txt' carregada(s) com sucesso!\n\n", counter);
+          printf("\n%d tarefa(s) existente(s) no arquivo 'tarefas.txt' carregada(s) com sucesso!\n", counter);
      } else {
-          printf("Nenhuma tarefa armazenada no arquivo 'tarefas.txt'!\n\n");
+          printf("\nNenhuma tarefa armazenada no arquivo 'tarefas.txt'!\n");
      }
      
      while (op != EXIT) {
